@@ -35,7 +35,7 @@ test.describe("eBook Creation, Editing and Delete tests", () => {
         await adminEbooks.goToEbooksList()
     })
 
-    test('Positive eBook Creation', async ({ page }) => {
+    test('Positive eBook Creation @smoke', async ({ page }) => {
 
         await adminEbooks.goToEbookCreation()
         await adminEbooks.fillEbookCreationForm(randomEbookTitle, randomName, publisher, eBookPrice, bookPrice, pagesCount, loremIpsum, loremIpsum, loremIpsum, loremIpsum, pdfFilePath, coverFilePath)
@@ -43,7 +43,7 @@ test.describe("eBook Creation, Editing and Delete tests", () => {
     })
 
 
-    test('eBook Creation and Delete', async ({ page }) => {
+    test('eBook Creation and Delete @smoke', async ({ page }) => {
         await adminEbooks.goToEbookCreation()
         await adminEbooks.fillEbookCreationForm(eBookTitleToBeDeleted, randomName, publisher, eBookPrice, bookPrice, pagesCount, loremIpsum, loremIpsum, loremIpsum, loremIpsum, pdfFilePath, coverFilePath)
         await adminEbooks.deleteEbook()
@@ -81,7 +81,7 @@ test.describe("eBook Creation, Editing and Delete tests", () => {
         await adminEbooks.assertEmptyCover()
     })
 
-    test('Positive eBook Editing', async ({ page }) => {
+    test('Positive eBook Editing @smoke', async ({ page }) => {
         await adminEbooks.goToEbookEditing()
         await adminEbooks.fillEbookEditingForm(randomString)
         await adminEbooks.assertEbookEditing()

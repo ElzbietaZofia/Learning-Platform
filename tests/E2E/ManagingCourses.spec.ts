@@ -165,7 +165,7 @@ test.describe("Adding Lessons to the Courses", () => {
         await adminCourseSearchBox.goToCoursesList()
     })
 
-    test('Add and Delete New Lesson to the Course', async ({ page }) => {
+    test('Add and Delete New Lesson to the Course @smoke', async ({ page }) => {
         await addModulesToCourse.addNewModuleToCourse()
         await addModulesToCourse.assertAddedModule()
         await addModulesToCourse.deleteModuleFromCourse()

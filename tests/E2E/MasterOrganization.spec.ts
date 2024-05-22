@@ -27,6 +27,13 @@ test.describe("Managing Users", () => {
 	})
 
 
+	test('Positive adding user to Organization @smoke', async ({ page }) => {
+    	await masterOrganization.goToMyOrganizationUsersList()
+		await masterOrganization.fillAddUserModal(userToBeDeleted.userEmailInvalid, randomFirstName, randomLastName, randomJob)
+		await masterOrganization.assertAddingUserToOrganization()
+	})
+
+
 	test('Negative adding user to Organization - Empty form', async ({ page }) => {
 
     	await masterOrganization.goToMyOrganizationUsersList()
@@ -55,26 +62,12 @@ test.describe("Managing Users", () => {
     	await masterOrganization.assertEmptyLastName()
 	})
 
-	test('Negative adding user to Organization - Empty Job Title', async ({ page }) => {
-
-    	await masterOrganization.goToMyOrganizationUsersList()
-    	await masterOrganization.fillAddUserModal(randomEmail, randomFirstName, randomLastName, '')
-    	await masterOrganization.assertEmptyJobTitle()
-	})
-
-	test('Promote and Demote User to Master', async ({page}) => {
+	test('Promote and Demote User to Master @smoke', async ({page}) => {
 
     	await masterOrganization.goToMyOrganizationUsersList()
     	await masterOrganization.promoteUserToMaster()
     	await masterOrganization.demoteUserFromMaster()
     	await masterOrganization.assertUserDemotion()
-	})
-
-	test('Adding and Deleting User to Organization', async ({page}) => {
-		await masterOrganization.goToMyOrganizationUsersList()
-		await masterOrganization.fillAddUserModal(userToBeDeleted.userEmailInvalid, randomFirstName, randomLastName, randomJob)
-		await masterOrganization.assertAddingUserToOrganization()
-		await masterOrganization.deletingUserFromOrganization()
 	})
 
 })

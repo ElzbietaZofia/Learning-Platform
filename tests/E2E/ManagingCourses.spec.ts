@@ -17,9 +17,9 @@ test.describe("Course Creation", () => {
     const randomPrice = getRandomNumber(200, 400)
     const randomName = getRandomName()
     const randomString = getRandomString()
-    const videoFilePath = '/home/Videos/MP4.mp4'
-    const thumbnailFilePath = '/home/Pictures/thumbnail.jpg'
-    const courseURL = '/course-xxx'
+    const videoFilePath = './files/SampleVideo.mp4'
+    const thumbnailFilePath = './files/puppy.jpg'
+    const courseURL = '/course-66'
 
     test.beforeEach(async ({ page }) => {
         adminLoginPage = new AdminLoginPage(page)
@@ -31,7 +31,7 @@ test.describe("Course Creation", () => {
         await adminCourse.goToCourseCreation()
     })
     
-    test('Positive Course Creation', async ({ page }) => {
+    test('Positive Course Creation @smoke', async ({ page }) => {
         await adminCourse.findElementAndRefresh()
         await adminCourse.fillCreateCourseForm(randomTitle, randomSubscriptionLenght.toString(), randomPrice.toString(), randomName, randomString, randomString, randomString, videoFilePath, thumbnailFilePath)
         await adminCourse.assertCourseCreation(courseURL)

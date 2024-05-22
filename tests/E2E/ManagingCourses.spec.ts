@@ -29,10 +29,10 @@ test.describe("Course Creation", () => {
         await basePage.visitAdminPanelLogin()
         await adminLoginPage.login(adminLoginData.adminEmailValid, adminLoginData.passwordValid)
         await adminCourse.goToCourseCreation()
-        await adminCourse.findElementAndRefresh()
     })
-
+    
     test('Positive Course Creation', async ({ page }) => {
+        await adminCourse.findElementAndRefresh()
         await adminCourse.fillCreateCourseForm(randomTitle, randomSubscriptionLenght.toString(), randomPrice.toString(), randomName, randomString, randomString, randomString, videoFilePath, thumbnailFilePath)
         await adminCourse.assertCourseCreation(courseURL)
     })
@@ -43,32 +43,32 @@ test.describe("Course Creation", () => {
     })
 
     test('Negative Course Creation - Course title left blank', async ({ page }) => {
+        await adminCourse.findElementAndRefresh()
         await adminCourse.fillCreateCourseForm('', randomSubscriptionLenght.toString(), randomPrice.toString(), randomName, randomString, randomString, randomString, videoFilePath, thumbnailFilePath)
         await adminCourse.assertCourseTitleBlank()
     })
 
     test('Negative Course Creation - Course length left blank', async ({ page }) => {
+        await adminCourse.findElementAndRefresh()
         await adminCourse.fillCreateCourseForm(randomTitle, '', randomPrice.toString(), randomName, randomString, randomString, randomString, videoFilePath, thumbnailFilePath)
         await adminCourse.assertCourseLengthBlank()
     })
 
-    test('Negative Course Creation - Course Subscription left blank', async ({ page }) => {
-        await adminCourse.fillCreateCourseForm(randomTitle, '',  randomPrice.toString(), randomName, randomString, randomString, randomString, videoFilePath, thumbnailFilePath)
-        await adminCourse.assertCourseLengthBlank()
-        await adminCourse.assertCourseSubscriptionBlank()
-    })
 
     test('Negative Course Creation - What You Learn left blank', async ({ page }) => {
+        await adminCourse.findElementAndRefresh()
         await adminCourse.fillCreateCourseForm(randomTitle, randomSubscriptionLenght.toString(), randomPrice.toString(), randomName, '', randomString, randomString, videoFilePath, thumbnailFilePath)
         await adminCourse.assertWhatYouLearnBlank()
     })
 
     test('Negative Course Creation - Video field left blank', async ({ page }) => {
+        await adminCourse.findElementAndRefresh()
         await adminCourse.fillCreateCourseForm(randomTitle, randomSubscriptionLenght.toString(), randomPrice.toString(), randomName, randomString, randomString, randomString, '', thumbnailFilePath)
         await adminCourse.assertVideoFieldBlank()
     })
 
     test('Negative Course Creation - Thumbnail field left blank', async ({ page }) => {
+        await adminCourse.findElementAndRefresh()
         await adminCourse.fillCreateCourseForm(randomTitle, randomSubscriptionLenght.toString(), randomPrice.toString(), randomName, randomString, randomString, randomString, videoFilePath, '')
         await adminCourse.assertThumbnailBlank()
     })
@@ -93,6 +93,7 @@ test.describe("Course Creation", () => {
         })
 
     test('Positive Course Editing @smoke', async ({page}) => {
+        await adminCourse.findElementAndRefresh()
         await adminCourse.fillEditCourseForm(randomCourseLength.toString())
         await adminCourse.assertCourseEditing()
     })

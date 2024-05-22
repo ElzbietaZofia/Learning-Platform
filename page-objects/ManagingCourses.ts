@@ -80,14 +80,17 @@ export class AdminCourse {
     await this.courseTitleInput.fill(courseTitle)
 
     if (subscriptionLength) {
+      await this.subscriptionLenghtInput.click()
       await this.subscriptionLenghtInput.fill(subscriptionLength)
     }
 
     if (coursePrice) {
+      await this.coursePriceInput.click()
       await this.coursePriceInput.fill(coursePrice)
     }
 
     if (instructorName) {
+      await this.instructorsNameInput.click()
       await this.instructorsNameInput.fill(instructorName)
     }
 
@@ -95,14 +98,17 @@ export class AdminCourse {
     await this.courseCategory.click()
 
     if (whatYouLearn) {
+      await this.whatYouLearnTextField.click()
       await this.whatYouLearnTextField.fill(whatYouLearn)
     }
 
     if (aboutCourse) {
+      await this.aboutCourseTextField.click()
       await this.aboutCourseTextField.fill(aboutCourse)
     }
 
     if (prerequisites) {
+      await this.prerequisitiesTextField.click()
       await this.prerequisitiesTextField.fill(prerequisites)
     }
 
@@ -112,7 +118,7 @@ export class AdminCourse {
     await this.eBookFromDropList.click()
 
     if (videoFilePath) {
-      await this.courseVideoFileEnter.click();
+      await this.courseVideoFileEnter.click()
       await this.courseVideoFileEnter.setInputFiles(videoFilePath)
     }
 
@@ -189,6 +195,7 @@ export class AdminCourse {
   ) {
 
     if (subscriptionLength) {
+      await this.subscriptionLenghtInput.click()
       await this.subscriptionLenghtInput.fill(subscriptionLength)
     }
 
@@ -224,7 +231,7 @@ export class AdminCourseSearchBox {
   }
 
   async fillSearchBox(query: string) {
-    await this.searchBoxCoursesInput.fill(query)
+    await this.searchBoxCoursesInput.type(query)
     await this.searchBoxCoursesInput.press('Enter')
   }
 
@@ -235,8 +242,6 @@ export class AdminCourseSearchBox {
   async assertNegativeSearchResult() {
     await expect(this.searchResultContainer).toBeEmpty()
   }
-
-
 
 }
 

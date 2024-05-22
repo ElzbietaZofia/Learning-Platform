@@ -17,7 +17,7 @@ test.describe("Admin Login and Logout flow", () => {
         await basePage.visitAdminPanelLogin()
     })
 
-    test('Positive Admin Login with correct credentials and logout', async ({ page }) => {
+    test('Positive Admin Login with correct credentials and logout @smoke', async ({ page }) => {
 
         await adminLoginPage.login(adminLoginData.adminEmailValid, adminLoginData.passwordValid)
         await adminLoginPage.assertSuccessfulLogin()

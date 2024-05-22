@@ -11,8 +11,7 @@ export class CartPage {
 
    backButton = this.page.getByTestId('back_bottom')
    backTextButton = this.page.getByTestId('back_top').getByText('Back')
-   addToCartIconCourse1 = this.page.locator('[data-test-id="course-112"]').getByRole('button')
-   addToCartIconCourse2 = this.page.locator('[data-test-id="course-66"]').getByRole('button')
+   addToCartIcon = this.page.locator('icon-cart')
    removeBinIcon = this.page.getByTestId('remove_button')
    removeBinIcon1 = this.page.getByTestId('remove_button').first()
    removeBinIcon2 = this.page.getByTestId('remove_button').nth(1)
@@ -41,22 +40,19 @@ export class CartPage {
    async goToCart() {
       await this.mainMenuComponent.cartTab.click()
    }
-
-   async addItemsToCart() {
-      await this.productsMenuComponent.elearningCoursesTab.click()
-      await this.page.waitForTimeout(3000)
-      await this.addToCartIconCourse1.click()
-      await this.backButton.click()
-      await this.page.waitForTimeout(3000)
-      await this.addToCartIconCourse2.click()
-   }
+   
+   async addToCart(courseId: number) {
+      await this.page.goto(`/course/${courseId}`);
+      await this.addToCartIcon.click();
+  }
 
    async goToPDPFromCart() {
       await this.courseMelaphyreHyperlink.click()
    }
 
-   async assertRedirectionToPDPFromCart() {
-      await expect(this.courseMelaphyreInstructors).toBeVisible()    
+   async assertRedirectionToPDPFromCart(courseURL: string) {
+      await expect(this.courseMelaphyreInstructors).toBeVisible()
+      await expect(this.page).toHaveURL(courseURL)   
    }
 
    async goToCheckout() {
@@ -103,10 +99,6 @@ export class CartPage {
       await expect(this.totalPriceCart).toContainText(emptyPrice)
    }
 
-   async addToCartFromPDPJumboJet() {
-      await this.page.goto('/course/66')
-      await this.courseJumboJetAddToCart.click()
-  }
 
   async changeItemsQuantity(quantity: string) {
    await this.quantityInput.fill(quantity)

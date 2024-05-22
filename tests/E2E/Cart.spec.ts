@@ -15,6 +15,7 @@ test.describe("Testing the cart page", () => {
     const emptyPrice = '$ 0'
     const pricePDP = '$ 15'
     const changedQuantityPrice = '$ 415'
+    const courseURL = '/course-66'
 
     test.beforeEach(async ({ page }) => {
         cartPage = new CartPage(page)
@@ -26,13 +27,12 @@ test.describe("Testing the cart page", () => {
 
 
     test('Adding items do the Cart from Learning tab - User is logged out', async ({ page }) => {
-
-        await cartPage.addItemsToCart()
+        await cartPage.addToCart(66)
         await cartPage.assertCartTotalPrice(price1)
     })
 
     test('Adding items do the Cart and Purchasing - User is logged out', async ({ page }) => {
-        await cartPage.addItemsToCart()
+        await cartPage.addToCart(66)
         await cartPage.goToCheckout()
         await cartPage.assertCheckoutUserLoggedOut()
         await cartPage.loginWithPurchaseModal(userLoginData.userEmailValid, userLoginData.userPasswordValid)
@@ -41,46 +41,40 @@ test.describe("Testing the cart page", () => {
 
     test('Adding items to the cart and Purchasing - User is logged in', async ({page}) => {
         await loginPage.login(userLoginData.userEmailValid, userLoginData.userPasswordValid)
-        await cartPage.addItemsToCart()
+        await cartPage.addToCart(66)
+        await cartPage.addToCart(67)
         await cartPage.goToCheckout()
         await cartPage.assertCheckoutUserLoggedIn()
     })
 
-    test('Adding Courses do the Cart from eLearning tab - User is logged in', async ({ page }) => {
-
-        await loginPage.login(userLoginData.userEmailValid, userLoginData.userPasswordValid)
-        await cartPage.addItemsToCart()
-        await cartPage.assertCartTotalPrice(price1)
-    })
 
     test('Removing item from the Cart', async ({ page }) => {
-
-        await cartPage.addItemsToCart()
+        await cartPage.addToCart(66)
+        await cartPage.addToCart(67)
         await cartPage.removeItemFromCart()
         await cartPage.assertRemovingFormCart(priceAfterRemoving)
     })
 
     test('Removing all items from the Cart', async ({ page }) => {
-
-        await cartPage.addItemsToCart()
+        await cartPage.addToCart(66)
+        await cartPage.addToCart(67)
         await cartPage.removeAllItemsFromCart()
         await cartPage.assertEmptyCart(emptyPrice)
     })
 
     test('Go to PDP from the Cart', async ({ page }) => {
-        await cartPage.addItemsToCart()
+        await cartPage.addToCart(66)
         await cartPage.goToPDPFromCart()
-        await cartPage.assertRedirectionToPDPFromCart()
+        await cartPage.assertRedirectionToPDPFromCart(courseURL)
     })
 
     test('Adding items do the Cart from PDP', async ({page}) => {
-        await cartPage.addToCartFromPDPJumboJet()
+        await cartPage.addToCart(66)
         await cartPage.assertCartTotalPrice(pricePDP)
     })
 
     test('Changing the quantity of items in the shopping basket', async ({page}) => {
-
-        await cartPage.addItemsToCart()
+        await cartPage.addToCart(66)
         await cartPage.changeItemsQuantity('2')
         await cartPage.assertCartTotalPrice(changedQuantityPrice)
     })

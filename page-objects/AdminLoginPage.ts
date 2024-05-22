@@ -12,9 +12,8 @@ adminPanelHeader = this.page.getByRole('heading', { name: 'Admin dashboard' })
 
 async login(username: string, password: string): Promise<void> {
     await this.adminEmailInput.type(username)
-    await this.adminEmailInput.press('Tab')
     await this.adminPasswordInput.type(password)
-    await this.adminPasswordInput.press('Enter')
+ 
 }
 
 async logout() {
@@ -22,11 +21,13 @@ async logout() {
 }
 
 async assertSuccessfulLogout() {
+    await expect(this.adminPanelHeader).toBeHidden()
     await expect(this.page).toHaveURL('/')
 }
 
 async assertSuccessfulLogin() {
 await expect(this.adminPanelHeader).toBeVisible()
+await expect(this.page).toHaveURL('/admin')
 }
 
 async assertIncorrectCredentials(alertMessageIncorrect: string) {

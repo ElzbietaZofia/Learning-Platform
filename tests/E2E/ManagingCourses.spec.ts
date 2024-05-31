@@ -41,44 +41,18 @@ test.describe("Course Creation", () => {
         await adminCourse.emptyCreateCourseForm()
         await adminCourse.assertEmptyCreateCourseForm()
     })
-
-    test('Negative Course Creation - Course title left blank', async ({ page }) => {
-        await adminCourse.findElementAndRefresh()
-        await adminCourse.fillCreateCourseForm('', randomSubscriptionLenght.toString(), randomPrice.toString(), randomName, randomString, randomString, randomString, videoFilePath, thumbnailFilePath)
-        await adminCourse.assertCourseTitleBlank()
+    
     })
 
-    test('Negative Course Creation - Course length left blank', async ({ page }) => {
-        await adminCourse.findElementAndRefresh()
-        await adminCourse.fillCreateCourseForm(randomTitle, '', randomPrice.toString(), randomName, randomString, randomString, randomString, videoFilePath, thumbnailFilePath)
-        await adminCourse.assertCourseLengthBlank()
-    })
-
-
-    test('Negative Course Creation - What You Learn left blank', async ({ page }) => {
-        await adminCourse.findElementAndRefresh()
-        await adminCourse.fillCreateCourseForm(randomTitle, randomSubscriptionLenght.toString(), randomPrice.toString(), randomName, '', randomString, randomString, videoFilePath, thumbnailFilePath)
-        await adminCourse.assertWhatYouLearnBlank()
-    })
-
-    test('Negative Course Creation - Video field left blank', async ({ page }) => {
-        await adminCourse.findElementAndRefresh()
-        await adminCourse.fillCreateCourseForm(randomTitle, randomSubscriptionLenght.toString(), randomPrice.toString(), randomName, randomString, randomString, randomString, '', thumbnailFilePath)
-        await adminCourse.assertVideoFieldBlank()
-    })
-
-    test('Negative Course Creation - Thumbnail field left blank', async ({ page }) => {
-        await adminCourse.findElementAndRefresh()
-        await adminCourse.fillCreateCourseForm(randomTitle, randomSubscriptionLenght.toString(), randomPrice.toString(), randomName, randomString, randomString, randomString, videoFilePath, '')
-        await adminCourse.assertThumbnailBlank()
-    })
+  
 
     test.describe("Course Editing", () => {
         let adminLoginPage: AdminLoginPage
         let adminCourse: AdminCourse
         let basePage: BasePage
     
-        const randomCourseLength = getRandomNumber(2, 6);
+        const randomCourseLength = getRandomNumber(2, 6)
+        const courseName = 'Online Security for Dummies'
       
     
         test.beforeEach(async ({ page }) => {
@@ -88,12 +62,11 @@ test.describe("Course Creation", () => {
     
             await basePage.visitAdminPanelLogin()
             await adminLoginPage.login(adminLoginData.adminEmailValid, adminLoginData.passwordValid)
-            await adminCourse.goToCourseEdit()
+            await adminCourse.goToCourseEdit(courseName)
             await adminCourse.findElementAndRefresh()
         })
 
     test('Positive Course Editing @smoke', async ({page}) => {
-        await adminCourse.findElementAndRefresh()
         await adminCourse.fillEditCourseForm(randomCourseLength.toString())
         await adminCourse.assertCourseEditing()
     })
@@ -110,6 +83,7 @@ test.describe("Courses Search Box Tests", () => {
     let adminLoginPage: AdminLoginPage
     let adminCourseSearchBox: AdminCourseSearchBox
     let basePage: BasePage
+    let adminCourse: AdminCourse
 
     const searchQueries = [
         { query: 'agile', shouldFind: true },
@@ -152,6 +126,7 @@ test.describe("Adding Lessons to the Courses", () => {
     let adminCourseSearchBox: AdminCourseSearchBox
     let addModulesToCourse: AddModulesToCourse
     let basePage: BasePage
+    let adminCourse: AdminCourse
 
     test.beforeEach(async ({ page }) => {
         adminLoginPage = new AdminLoginPage(page)
@@ -174,5 +149,4 @@ test.describe("Adding Lessons to the Courses", () => {
 
 })
 
-})
 

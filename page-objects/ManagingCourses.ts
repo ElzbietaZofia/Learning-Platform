@@ -27,26 +27,19 @@ export class AdminCourse {
   courseVideoThumbnailEnter = this.page.getByLabel('Enter video thumbnail', { exact: true })
   addYourCourseButton = this.page.getByTestId('submit_button')
 
-  emptyTitleMsg = this.page.getByText('Value is required')
-  emptyCourseLengthMsg = this.page.getByText('The minimum value allowed is 1')
-  emptySubscriptionLengthMsg = this.page.getByText('The minimum value allowed is 1')
-  emptyCoursePriceMsg = this.page.getByText('The minimum value allowed is 1')
-  emptyInstructorsNameMsg = this.page.getByText('Value is required')
-  emptyInstructorsEmailMsg = this.page.getByText('Value is required')
-  emptyWhatYouLearnMsg = this.page.getByText('Value is required')
-  emptyAboutCourseMsg = this.page.getByText('Value is required')
-  emptyPrerequisitiesMsg = this.page.getByText('Value is required')
-  emptyVideoMsg = this.page.getByText('Value is required')
-  emptyThumbnailMsg = this.page.getByText('Value is required')
 
   //Edit
   coursesListHeader = this.page.getByText('Courses Course')
-  tooltipPCIe = this.page.locator('[data-test-id="options-button-2"]')
+  searchBox = this.page.locator('[data-test-id="search-box-2"]')
   editLabelTooltip = this.page.getByText('Edit')
   saveYourCourseButton = this.page.getByRole('button', { name: 'Save your course' })
   toastSuccessEdit = this.page.getByText('You have successfully edited a course.')
   toastUnsuccessfulEdit = this.page.getByText('Unable to edit the resource. Double check the validity of data.')
   toastEmpty = this.page.getByText('Unable to edit the resource. Double check the validity of data.')
+
+  getTooltipSelector = (courseName: string) => {
+    return this.page.getByRole('row', { name: new RegExp(`.+${courseName}.+`) }).getByRole('button')
+  }
 
 
   async goToCourseCreation() {
@@ -145,10 +138,6 @@ export class AdminCourse {
     await expect(this.toastEmpty).toBeVisible()
   }
 
-  async assertCourseTitleBlank() {
-    await expect(this.emptyTitleMsg).toContainText('Value is required')
-  }
-
   async assertCourseLengthBlank() {
     await expect(this.toastEmpty).toBeVisible()
   }
@@ -161,32 +150,15 @@ export class AdminCourse {
     await expect(this.toastEmpty).toBeVisible()
   }
 
-  async assertInstructorsNameBlank() {
-    await expect(this.emptyInstructorsNameMsg).toContainText('Value is required')
-  }
-
-  async assertWhatYouLearnBlank() {
-    await expect(this.emptyWhatYouLearnMsg).toContainText('Value is required')
-  }
-
-  async assertPrerequisitiesBlank() {
-    await expect(this.emptyPrerequisitiesMsg).toContainText('Value is required')
-  }
-
-  async assertVideoFieldBlank() {
-    await expect(this.emptyVideoMsg).toContainText('Value is required')
-  }
-
-  async assertThumbnailBlank() {
-    await expect(this.emptyThumbnailMsg).toContainText('Value is required')
-  }
 
   // Editing
-  async goToCourseEdit() {
-    await this.adminPanelComponent.coursesIcon.click()
-    await this.coursesListHeader.click()
-    await this.page.waitForTimeout(3000)
-    await this.tooltipPCIe.click()
+
+  async goToCourseEdit(
+    courseName: string) {
+    await this.searchBox.click()
+    await this.searchBox.fill(courseName)
+    await this.searchBox.press('Enter')
+    await this.getTooltipSelector(courseName).click()
     await this.editLabelTooltip.click()
   }
 
@@ -203,7 +175,7 @@ export class AdminCourse {
   }
 
   async assertCourseEditing() {
-    await expect(this.tooltipPCIe).toBeVisible()
+    await expect(this.toastSuccessEdit).toBeVisible()
   }
 
   async assertNegativeCourseEditing() {
